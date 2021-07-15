@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS Administrator;
 
 CREATE TABLE Administrator {
+--uhhhhhhh test
     AdminID int,
     MenuID int,
     Fname varchar(50),
