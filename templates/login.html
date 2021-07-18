@@ -1,39 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/login.css')}}">
     <title>LLN Resto</title>
-    <link = rel="stylesheet" type ="text/css" href="login.css">
 </head>
 <body>
-
 <h1>LLN Resto</h1>
 <nav>
     <ul>
-        <a href="#"><li>Home</li></a>
-        <a href="#"><li>Menu</li></a>
-        <a href="#"><li>Order</li></a>
-        <a href="#"><li>Login</li></a>
+        <a href="{{ url_for('home') }}"><li>Home</li></a>
+        <a href="{{ url_for('menu') }}"><li>Menu</li></a>
+        <a href="{{ url_for('cart') }}"><li>Cart</li></a>
+        <a href="{{ url_for('login')}}"><li>Login</li></a>
     </ul>
 </nav>
 
 <section class="login">
     <div class="background">
-    <img src="home2.jpg" height="700px" width="700px">
+    <image src="{{url_for('static', filename='images/home2.jpg')}}">
+    </div>
+    <div class="avatar">
+        <image src="{{url_for('static', filename='images/adminicon.png')}}" height ="80" width "80">
     </div>
     <div class="loginbox">
-    <img src="adminicon.png" class="avatar">
         <h2>Login Here</h2>
         <form>
             <p>Username</p>
-            <input type="text" name="" placeholder="Enter Username">
+            <input type="text" name="" placeholder="Enter Username"></input>
             <p>Password</p>
-            <input type="password" name="" placeholder="Enter Password">
-            <input type="submit" name="" value="Login"><br>
+            <input type="password" name="" placeholder="Enter Password"></input><br>
+            <input type="submit" name="" value="Login"></input><br>
             <!--
             <a href="#">Lost your password?</a><br>
             <a href="#">Don't have an account?</a><br>
             -->
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
 </section>

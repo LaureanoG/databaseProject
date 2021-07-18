@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/cart.css')}}">
     <title>LLN Resto</title>
-    <link = rel="stylesheet" type ="text/css" href="cart.css">
 </head>
 <body>
-
 <h1>LLN Resto</h1>
 <nav>
     <ul>
-        <a href="#"><li>Home</li></a>
-        <a href="#"><li>Menu</li></a>
-        <a href="#"><li>Order</li></a>
-        <a href="#"><li>Login</li></a>
+        <a href="{{ url_for('home') }}"><li>Home</li></a>
+        <a href="{{ url_for('menu') }}"><li>Menu</li></a>
+        <a href="{{ url_for('cart') }}"><li>Cart</li></a>
+        <a href="{{ url_for('login')}}"><li>Login</li></a>
     </ul>
 </nav>
+
 <section class="cart"> 
     <div class="cartpage">
     <table>
@@ -26,7 +29,7 @@
         <tr> 
             <td>
             <div class="orderinfo">
-                <img src="pizza1.jpg" height="200" width="250">
+                <image src="{{url_for('static', filename='images/pizza1.jpg')}}" height="200" width="250">
                 <div>
                     <p>Pizza</r><br>
                     <a href ="">Remove</a>
@@ -35,17 +38,11 @@
             </td>
             <td><input type="number" value="1"></td>
             <td>$12.99</td>
-            <!--
-            <td>{{item[1]}}</td>
-            <td>{{item[2]}}</td>
-            <td>{{item[3]}}</td>
-            <td>{{item[4]}}</td>
-            -->
         </tr>
         <tr> 
             <td>
             <div class="orderinfo">
-                <img src="pasta2.jpg" height="200" width="250">
+                <image src="{{url_for('static', filename='images/pasta2.jpg')}}" height="200" width="250">
                 <div>
                     <p>Chicken Alfredo</r><br>
                     <a href ="">Remove</a>
@@ -54,12 +51,6 @@
             </td>
             <td><input type="number" value="1"></td>
             <td>$11.99</td>
-            <!--
-            <td>{{item[1]}}</td>
-            <td>{{item[2]}}</td>
-            <td>{{item[3]}}</td>
-            <td>{{item[4]}}</td>
-            -->
         </tr>
     </table>
     <div class = "totalprice">
@@ -81,6 +72,9 @@
             <td><input type="submit" name="" value="Place Order"></td>
             </tr>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </section>
 </body>
 </html>
