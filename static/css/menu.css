@@ -39,7 +39,7 @@ nav ul a:hover{
 }
 .item img{
     width: 100%;
-    height: 100%
+
     object-fit: pointer;
     cursor: pointer;
     transition: 0.2s ease;
