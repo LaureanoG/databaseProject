@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/addCustomerForm.css')}}">
+    <title>LLN Resto</title>
+</head>
+<body>
+
+<h1>LLN Resto</h1>
+<nav>
+    <ul>
+        <a href="{{ url_for('homeAdmin') }}"><li>Home</li></a>
+        <a href="{{ url_for('menuAdmin') }}"><li>Menu</li></a>
+        <a href="{{ url_for('manageCustomers')}}"><li>Manage Customers</li></a>
+    </ul>
+</nav>
+
+</section>
+
+<div class="manageCustomers">
+    <div class="table">
+        <h2 style="padding: 2px;"class="page-title">Add Customer Form</h2>
+        <h4 style="font-weight: 10; padding: 2px; margin-bottom: 5px;" class="message">Please enter the following information in the fields below and click Add when done.</h4>
+
+    <div id="form">
+        <form action="addCustomerForm" method="post" autocomplete="off">
+           <label>First Name:</label>
+           <input type = "text" name = "Fname" value="{{request.form.Fname}}"><br>
+           <label>Last Name:</label>
+           <input type = "text" name = "Lname" value="{{request.form.Lname}}"><br>
+           <label>Address:</label>
+           <input type = "text" name = "Address" value="{{request.form.Address}}"><br>
+           <label>City:</label>
+           <input type = "text" name = "City" value="{{request.form.City}}"><br>
+           <label>State:</label>
+           <input type = "text" name = "State" value="{{request.form.State}}"><br>
+           <label>Zip Code:</label>
+           <input type = "text" name = "ZipCode" value="{{request.form.ZipCode}}"><br>
+           <label>Phone:</label>
+           <input type = "text" name = "PhoneNumber" value="{{request.form.PhoneNumber}}"><br>
+           <label>E-mail:</label>
+           <input type = "text" name = "Email" value="{{request.form.Email}}"><br>
+          
+           <input class= "btn btn-default" type="submit" value="Add"> 
+    </div>
+    </div>
+     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</body>
+</html>
