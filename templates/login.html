@@ -11,9 +11,6 @@
 <h1>LLN Resto</h1>
 <nav>
     <ul>
-        <a href="{{ url_for('home') }}"><li>Home</li></a>
-        <a href="{{ url_for('menu') }}"><li>Menu</li></a>
-        <a href="{{ url_for('cart') }}"><li>Cart</li></a>
         <a href="{{ url_for('login')}}"><li>Login</li></a>
     </ul>
 </nav>
@@ -26,17 +23,24 @@
         <image src="{{url_for('static', filename='images/adminicon.png')}}" height ="80" width "80">
     </div>
     <div class="loginbox">
+        <div class="msg">{{ msg }}</div>
         <h2>Login Here</h2>
-        <form>
+        <form action="{{ url_for('login')}}" method="POST" autocomplete="off">
             <p>Username</p>
-            <input type="text" name="" placeholder="Enter Username"></input>
+            <input type="text" name="username" placeholder="Enter Username" id="username"/>
             <p>Password</p>
-            <input type="password" name="" placeholder="Enter Password"></input><br>
-            <input type="submit" name="" value="Login"></input><br>
+            <input type="password" name="password" placeholder="Enter Password" id="password"/><br>
+            <p>Login as:</p>
+            <input type="radio" class="loginAdmin" name="login" value="Admin"/><br>
+            <label for="loginAdmin">Admin</label><br>
+            <input type="radio" class="loginCustomer" name="login" value="Customer"/><br>
+            <label for="loginCustomer">Customer</label><br>
+            <input type="submit" class="btn" value="Login"/><br>
             <!--
             <a href="#">Lost your password?</a><br>
             <a href="#">Don't have an account?</a><br>
             -->
+        </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
