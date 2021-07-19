@@ -1,4 +1,4 @@
 CREATE TABLE IF NOT EXISTS Administrator(AdminID INTEGER, Fname VARCHAR(50), Lname VARCHAR(50), Username VARCHAR(50), Password VARCHAR(50));
-CREATE TABLE IF NOT EXISTS Customer(CustomerID INTEGER, Fname VARCHAR(50), Lname VARCHAR(50), Username VARCHAR(50), Password VARCHAR(50), Email VARCHAR(50), PhoneNumber VARCHAR(50));
+CREATE TABLE IF NOT EXISTS Customer(CustomerID INTEGER, Fname VARCHAR(50), Lname VARCHAR(50), Username VARCHAR(50), Password VARCHAR(50), Address VARCHAR(50), City VARCHAR(50), State VARCHAR(50), ZipCode INTEGER, Email VARCHAR(50), PhoneNumber VARCHAR(50));
 INSERT INTO Administrator VALUES(0, "Admin", "Default", 'Admin', 'Password');
-INSERT INTO Customer VALUES(0, "Customer", "Default", 'Customer', 'Password', 'CustomerEmail@fauxEmail.com', '888-888-8888');
+INSERT INTO Customer VALUES(0, "Customer", "Default", 'Customer', 'Password', '1350 Willow Dr.', 'Tampa', 'FL', '33671', 'CustomerEmail@fauxEmail.com', '888-888-8888');
