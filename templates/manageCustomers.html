@@ -32,9 +32,12 @@
         <table>
             <tr>
                 <th></th>
-                <th></th> 
+                <th></th>
+                <th>Customer ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
+                <th>Username</th>
+                <th>Password</th>
                 <th>Address</th>
                 <th>City</th>
                 <th>State</th>
@@ -45,8 +48,8 @@
 
             {% for item in data %}
             <tr>
-                <td><a href="/edit/{{item[0]}}" class="btn" style="padding: 3px;" type="submit" value="Modify" name="modify">Modify</a></td>
                 <td><a href="/delete/{{item[0]}}" class="btn" style="padding: 3px;" type="submit" value="Delete" name="delete" >Delete</a></td>
+                <td>{{item[0]}}</td>
                 <td>{{item[1]}}</td>
                 <td>{{item[2]}}</td>
                 <td>{{item[3]}}</td>
@@ -55,6 +58,9 @@
                 <td>{{item[6]}}</td>
                 <td>{{item[7]}}</td>
                 <td>{{item[8]}}</td>
+                <td>{{item[9]}}</td>
+                <td>{{item[10]}}</td>
+                <td>{{item[11]}}</td>
             </tr>
             {% endfor %}    
           </table>
