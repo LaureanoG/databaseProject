@@ -105,6 +105,7 @@ def deleteCustomer(CustomerID):
     cursor.execute('SELECT * FROM Customer;')
     return render_template('manageCustomers.html', data=cursor)
 
+
 @app.route('/addCustomerForm', methods=['GET', 'POST'])
 def addCustomerForm():
     msg = ''

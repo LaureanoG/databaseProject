@@ -25,13 +25,12 @@
     
         <h2 style="padding: 2px;"class="page-title">Manage Customers</h2>
 
-        <h4 style="font-weight: 10; padding: 2px; margin-bottom: 5px;" class="message">Click Add Customer, Modify, or Delete below to make changes to the Customers Table.</h4>
+        <h4 style="font-weight: 10; padding: 2px; margin-bottom: 5px;" class="message">Click Add Customer or Delete Customers below to make changes to the Customers Table.</h4>
         
         <a href="/addCustomerForm" class="btn" style="; margin: 5px;" type="submit" value="Add Entry">Add Customer</a> 
         
         <table>
             <tr>
-                <th></th>
                 <th></th>
                 <th>Customer ID</th>
                 <th>First Name</th>
@@ -42,8 +41,8 @@
                 <th>City</th>
                 <th>State</th>
                 <th>Zip Code</th>
-                <th>Phone Number</th>
                 <th>Email Address</th>
+                <th>Phone Number</th>
             </tr>
 
             {% for item in data %}
@@ -60,12 +59,11 @@
                 <td>{{item[8]}}</td>
                 <td>{{item[9]}}</td>
                 <td>{{item[10]}}</td>
-                <td>{{item[11]}}</td>
             </tr>
             {% endfor %}    
           </table>
           <br>
-          <input class= "btn btn-default" type="submit" value="Back"> 
+          <a href="/homeAdmin" class= "btn btn-default" type="submit" value="Back">Back</a>
           
     </div>
 </body>
