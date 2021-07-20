@@ -97,6 +97,7 @@ table {
 }
 
 th{
+    border: 1px solid #000;
     text-align: left;
     padding: 10px;
     color: #000;
@@ -104,6 +105,7 @@ th{
     font-weight: normal;
 }
 td{
+    text-align: left;
     padding: 10px 5px;
 }
 /*
@@ -114,6 +116,20 @@ td, th {
 }
 */
 
+/*
 tr:nth-child(even) {
     background-color: #dce6e7;
+}
+*/
+
+.orderHistory{
+    position: center;
+    left: 10%;
+    padding: 0px 100px;
+    font-size: 15px;
+}
+
+.customerInfo{
+    width: 100%;
+    max-width: 400px;
 }
