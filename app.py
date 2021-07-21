@@ -32,7 +32,6 @@ def initialize():
     connector.close()
     return render_template("login.html", msg='Welcome to LLN Resto!')
 
-
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     msg = ''
@@ -122,6 +121,11 @@ def menuAdmin():
 def admin():
     return render_template("admin.html")
 
+#logout
+@app.route("/logout", methods=['GET', 'POST'])
+def logout():
+    return render_template("login.html")
+
 
 @app.route('/manageCustomers', methods=['GET', 'POST'])
 def manageCustomers():
@@ -170,7 +174,10 @@ def addCustomerForm():
 def orderHistory():
     connector = sqlite3.connect('database.db')
     cursor = connector.cursor()
+
     if request.method == "GET" and request.args.get('val', None) == "Place Order":
+        if cursor.execute('SELECT FoodID FROM Cart WHERE OrderID = (?);', (session['orderID'],)).fetchone() == None:
+            return render_template("cart.html", subtotal=0.00, tax=0.00, total=0.00)
         foodID = cursor.execute('SELECT FoodID FROM Cart WHERE OrderID = (?);', (session['orderID'], )).fetchone()[0]
         price = cursor.execute('SELECT UnitPrice FROM FoodItem WHERE FoodID = (?);', (foodID, )).fetchone()[0]
         cursor.execute('INSERT OR REPLACE INTO OrderHistory VALUES(?, ?, ?, ?, ?, ?);', \
@@ -179,5 +186,5 @@ def orderHistory():
         session['orderID'] = randint(0, 100000)
     fName = cursor.execute('SELECT Fname FROM Customer WHERE CustomerID = (?);', (int(session['customerID']),)).fetchone()[0]
     lName = cursor.execute('SELECT Lname FROM Customer WHERE CustomerID = (?);', (int(session['customerID']),)).fetchone()[0]
-    cursor.execute('SELECT OrderID, Name, Quantity, Ordered, Total FROM OrderHistory NATURAL JOIN FoodItem ORDER BY Ordered DESC;')
+    cursor.execute('SELECT OrderID, Name, Quantity, Ordered, Total FROM OrderHistory NATURAL JOIN FoodItem WHERE CustomerID = (?) ORDER BY Ordered DESC;', (session['customerID'], ))
     return render_template("orderHistory.html", data=cursor, lname = lName, fname = fName)
