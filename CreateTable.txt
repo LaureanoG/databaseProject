@@ -6,5 +6,4 @@ CREATE TABLE IF NOT EXISTS OrderHistory(CustomerID INTEGER, OrderID INTEGER, Foo
 INSERT OR REPLACE INTO Administrator VALUES(0, "Admin", "Default", 'Admin', 'Password');
 INSERT OR REPLACE INTO Customer VALUES(0, "Customer", "Default", 'Customer', 'Password', '1350 Willow Dr.', 'Tampa', 'FL', '33671', 'CustomerEmail@fauxEmail.com', '888-888-8888');
 INSERT OR REPLACE INTO OrderHistory VALUES(7, 0, 1, 2, CURRENT_DATE, 4.5);
-INSERT OR REPLACE INTO  Cart VALUES(34, 1, 2);
-INSERT INTO OrderHistory VALUES(8, 34, 0, 2, CURRENT_DATE, 60.0);
+INSERT OR REPLACE INTO Cart VALUES(34, 1, 2);

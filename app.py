@@ -50,8 +50,9 @@ def login():
                 return render_template("homeAdmin.html")
             if 'Customer' == request.form['login']:
                 # Use customer's password & username data to get customer ID
-                session['customerID'] = cursor.execute("SELECT CustomerID FROM Customer WHERE Username = (?) and Password = (?)", \
-                               (username, password)).fetchone()[0]
+                cursor.execute("SELECT CustomerID FROM Customer WHERE Username = ? and Password = ?", \
+                               (username, password))
+                session['customerID'] = cursor.fetchone()[0]
                 return render_template("homeCustomer.html")
         else:
             msg = 'The provided credentials do not match our records.\nPlease try again.'
@@ -106,10 +107,11 @@ def cart():
 
     if request.method == 'GET':
         food = request.args.get('food', None)
-        msg = food
+        msg = food + str(session['customerID'])
         # Increment item in cart table
-        # foodQuantity = cursor.execute('SELECT Quantity FROM Cart NATURAL JOIN FoodItem WHERE OrderID = (?) AND Name = (?)', \
-        #                (session['orderID'], food)).fetchone()[0]
+        cursor.execute('SELECT Quantity FROM Cart NATURAL JOIN FoodItem WHERE OrderID = (?) AND Name = (?) AND Quantity IS NOT NULL', \
+                        (session['orderID'], food))
+        foodQuantity = cursor.fetchone()[0]
         # foodIDNum = cursor.execute('SELECT FoodID FROM FoodItem WHERE Name = (?)', (food,)).fetchone()
         # cursor.execute('UPDATE Cart SET Quantity = Quantity + 1 WHERE OrderID = (?) AND FoodID = (?)', (int(session['orderID']), foodIDNum))
         # #cursor.commit()
