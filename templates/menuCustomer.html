@@ -22,32 +22,32 @@
     <div class="item">
         <image src="{{url_for('static', filename='images/pizza1.jpg')}}" height="300" width="350">
         <h4>Pizza</h4>
-        <a href="/cart" class= "btn btn-default" type="submit" value="Order">Order</a>
+        <a href="{{ url_for('cart', food='Pizza') }}" class= "btn btn-default" type="submit" value="Pizza">Order</a>
     </div>
     <div class="item">
         <image src="{{url_for('static', filename='images/pizza2.jpg')}}" height="300" width="350">
         <h4>Veggie Pizza</h4>
-        <a href="/cart" class= "btn btn-default" type="submit" value="Order">Order</a>
+        <a href="{{ url_for('cart', food='Veggie Pizza') }}" class= "btn btn-default" type="submit" value="Veggie_Pizza">Order</a>
     </div>
     <div class="item">
         <image src="{{url_for('static', filename='images/burger1.jpg')}}" height="300" width="350">
         <h4>Burger</h4>
-        <a href="/cart" class= "btn btn-default" type="submit" value="Order">Order</a>
+        <a href="{{ url_for('cart', food='Burger') }}" class= "btn btn-default" type="submit" value="Burger">Order</a>
     </div>
     <div class="item">
         <image src="{{url_for('static', filename='images/burger2.jpg')}}" height="300" width="350">
         <h4>Chicken Burger</h4>
-        <a href="/cart" class= "btn btn-default" type="submit" value="Order">Order</a>
+        <a href="{{ url_for('cart', food='Chicken Burger') }}" class= "btn btn-default" type="submit" value="Chicken_Burger">Order</a>
     </div>
     <div class="item">
         <image src="{{url_for('static', filename='images/pasta1.jpg')}}" height="300" width="350">
         <h4>Spaghetti</h4>
-        <a href="/cart" class= "btn btn-default" type="submit" value="Order">Order</a>
+        <a href="{{ url_for('cart', food='Spaghetti') }}" class= "btn btn-default" type="submit" value="Spaghetti">Order</a>
     </div>
     <div class="item">
         <image src="{{url_for('static', filename='images/pasta2.jpg')}}" height="300" width="350">
         <h4>Chicken Alfredo</h4>
-            <a href="/cart" class= "btn btn-default" type="submit" value="Order">Order</a>
+            <a href="{{ url_for('cart', food='Chicken Alfredo') }}" class= "btn btn-default" type="submit" value="Chicken_Alfredo">Order</a>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

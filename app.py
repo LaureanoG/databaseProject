@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from random import seed, randint
 import time
+from datetime import date
 import sqlite3
 
 app = Flask(__name__)
-
+app.secret_key = '_5#y2L"F4Q8z\n\xec]/'
 
 # Login info for default admin
 # Username: Admin
@@ -20,6 +21,7 @@ def initialize():
     cursor = connector.cursor()
     file = open('CreateTable.txt', 'r')
     for i in file.readlines():
+        time.sleep(2)
         cursor.execute(i)
     connector.commit()
     return render_template("login.html", msg='Welcome to LLN Resto!')
@@ -29,10 +31,10 @@ def initialize():
 def login():
     msg = ''
     if request.method == 'POST' and request.form['username'] != "" and request.form['password'] != "":
-        username = request.form['username']
-        password = request.form['password']
         connector = sqlite3.connect('database.db')
         cursor = connector.cursor()
+        username = request.form['username']
+        password = request.form['password']
         if 'Admin' == request.form['login']:
             cursor.execute('SELECT Password FROM Administrator WHERE Username = (?);', (username,))
         if 'Customer' == request.form['login']:
@@ -47,6 +49,9 @@ def login():
             if 'Admin' == request.form['login']:
                 return render_template("homeAdmin.html")
             if 'Customer' == request.form['login']:
+                # Use customer's password & username data to get customer ID
+                session['customerID'] = cursor.execute("SELECT CustomerID FROM Customer WHERE Username = (?) and Password = (?)", \
+                               (username, password)).fetchone()[0]
                 return render_template("homeCustomer.html")
         else:
             msg = 'The provided credentials do not match our records.\nPlease try again.'
@@ -69,7 +74,23 @@ def homeCustomer():
 
 @app.route("/cart", methods=['GET', 'POST'])
 def cart():
-    #When cart generates an orderid make sure to send it to orderhistory too
+    # Prints what is currently in the cart
+    try:
+        session['price']
+    except:
+        session['price'] = 0
+    if request.method == 'POST' and request.path != "/cart":
+        food = request.args.get('food', None)
+        # Based on food will perform queries
+        # If food exists, quanity of food item will increment
+        if session[food]:
+            session[food] += 1
+        else:  # If food doesn't exist, add it to the table
+            session[food] = 1
+        connector = sqlite3.connect('database.db')
+        cursor = connector.cursor()
+        session['price'] += cursor.execute('Select UnitPrice FROM FoodItem WHERE Name = (?)', (food,))
+        # Maybe a dictionary would work well for storing values & food
     return render_template("cart.html")
 
 
@@ -93,7 +114,6 @@ def manageCustomers():
     connector = sqlite3.connect('database.db')
     cursor = connector.cursor()
     cursor.execute('SELECT * FROM Customer;')
-    #if request.method == "POST" and
     return render_template('manageCustomers.html', data=cursor)
 
 
@@ -131,10 +151,18 @@ def addCustomerForm():
         msg = 'Please enter the following information in the fields below and click Add when done.'
     return render_template('addCustomerForm.html', msg=msg)
 
+
 @app.route("/orderHistory", methods=['GET', 'POST'])
 def orderHistory():
     connector = sqlite3.connect('database.db')
     cursor = connector.cursor()
+    # When place order is clicked, session variable is emptied & order is added to table
+    if request.method == "POST":
+        foodNames = {'Pizza': 1, 'Veggie Pizza': 2, 'Burger': 3}
+        for x in foodNames:
+            cursor.execute('INSERT INTO OrderHistory VALUES(?, ?, ?, ?, ?, ?)', \
+                           (session['CustomerID'], randint(0, 100000), foodNames[x], session[x], date.today(), session['price']))
+            connector.commit()
     cursor.execute('SELECT * FROM OrderHistory INNER JOIN Cart ON Cart.OrderID=OrderHistory.OrderID;')
     connector.commit()
     cursor.execute('SELECT * FROM OrderHistory;')
