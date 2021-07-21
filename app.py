@@ -21,14 +21,9 @@ def initialize():
     cursor = connector.cursor()
     file = open('CreateTable.txt', 'r')
     for i in file.readlines():
-        time.sleep(2)
+        time.sleep(3)
         cursor.execute(i)
-    connector.commit()
-    file = open('initializeFoodItem.txt.txt', 'r')
-    for i in file.readlines():
-        time.sleep(1)
-        cursor.execute(i)
-    connector.commit()
+        connector.commit()
     return render_template("login.html", msg='Welcome to LLN Resto!')
 
 
@@ -69,35 +64,59 @@ def login():
 
 @app.route('/homeAdmin', methods=['GET', 'POST'])
 def homeAdmin():
+    connector = sqlite3.connect('database.db')
+    cursor = connector.cursor()
+    file = open('initializeFoodItem.txt', 'r')
+    for i in file.readlines():
+        time.sleep(3)
+        cursor.execute(i)
+    connector.commit()
     return render_template('homeAdmin.html')
 
 
 @app.route('/homeCustomer', methods=['GET', 'POST'])
 def homeCustomer():
+    connector = sqlite3.connect('database.db')
+    cursor = connector.cursor()
+    file = open('initializeFoodItem.txt', 'r')
+    for i in file.readlines():
+        time.sleep(3)
+        cursor.execute(i)
+    connector.commit()
     return render_template('homeCustomer.html')
 
 
 @app.route("/cart", methods=['GET', 'POST'])
 def cart():
     # Prints what is currently in the cart
-    connector = sqlite3.connect('database.db')
+    connector = sqlite3.connect('database.db', timeout = 10)
     cursor = connector.cursor()
     msg = 'NO'
     try:  # See if it exists
         session['price']
         session['orderID']
-    except: # Initialize if non existant/start a new instance of cart
+    except: # Initialize if non existent/start a new instance of cart
         session['price'] = 0
+        seed(time.time())
         session['orderID'] = randint(0, 10000)
-        cursor.execute('TRUNCATE TABLE Cart;')
+        for i in range(0, 6):
+            cursor.execute('INSERT INTO Cart(?, ?, ?);', (session['OrderID'], i, 0))
+            cursor.commit()
+        cursor.execute('INSERT INTO OrderHistory(OrderID);', (session['orderID'],))
 
     if request.method == 'GET':
         food = request.args.get('food', None)
         msg = food
-        #Based on food will perform queries
-        #If food exists, quaTnity of food item will increment - USE CART TABLE
-        # else:  # If food doesn't exist, add it to the table
-        #session['price'] += cursor.execute('Select UnitPrice FROM FoodItem WHERE Name = (?)', (food,))
+        # Increment item in cart table
+        # foodQuantity = cursor.execute('SELECT Quantity FROM Cart NATURAL JOIN FoodItem WHERE OrderID = (?) AND Name = (?)', \
+        #                (session['orderID'], food)).fetchone()[0]
+        # foodIDNum = cursor.execute('SELECT FoodID FROM FoodItem WHERE Name = (?)', (food,)).fetchone()
+        # cursor.execute('UPDATE Cart SET Quantity = Quantity + 1 WHERE OrderID = (?) AND FoodID = (?)', (int(session['orderID']), foodIDNum))
+        # #cursor.commit()
+        # #session['price'] += cursor.execute('Select UnitPrice FROM FoodItem WHERE Name = (?)', (food,))
+        # price = cursor.execute('SELECT Total FROM OrderHistory WHERE OrderID = (?);', (session['orderID'], ))
+        # cursor.execute('UPDATE OrderHistory SET Total = (SELECT UnitPrice FROM FoodItem WHERE FoodID = (?)) + (?) WHERE OrderID = (?) and FoodID = (?);', (foodIDNum, price, session['orderID'], foodIDNum))
+        # cursor.commit()
         # Maybe a dictionary would work well for storing values & food
     return render_template("cart.html", msg = msg)
 
