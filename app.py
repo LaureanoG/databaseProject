@@ -69,6 +69,7 @@ def homeCustomer():
 
 @app.route("/cart", methods=['GET', 'POST'])
 def cart():
+    #When cart generates an orderid make sure to send it to orderhistory too
     return render_template("cart.html")
 
 
@@ -130,7 +131,11 @@ def addCustomerForm():
         msg = 'Please enter the following information in the fields below and click Add when done.'
     return render_template('addCustomerForm.html', msg=msg)
 
-
 @app.route("/orderHistory", methods=['GET', 'POST'])
 def orderHistory():
-    return render_template("orderHistory.html")
+    connector = sqlite3.connect('database.db')
+    cursor = connector.cursor()
+    cursor.execute('SELECT * FROM OrderHistory INNER JOIN Cart ON Cart.OrderID=OrderHistory.OrderID;')
+    connector.commit()
+    cursor.execute('SELECT * FROM OrderHistory;')
+    return render_template("orderHistory.html", data=cursor)
