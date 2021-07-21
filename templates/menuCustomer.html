@@ -25,34 +25,34 @@
         <image src="{{url_for('static', filename='images/pizza1.jpg')}}" height="300" width="350">
         <h4>Pizza</h4>
             <h3>15.00</h3>
-        <a href="{{ url_for('b', my_var='Pizza') }}" class= "btn btn-default" type="submit" value="Order">Order</a>
+        <a href="{{ url_for('cart', food='Pizza') }}" class= "btn btn-default" type="submit" value="Order">Order</a>
     </div>
     <div class="item">
         <image src="{{url_for('static', filename='images/pizza2.jpg')}}" height="300" width="350">
         <h4>Veggie Pizza</h4>
             <h3>12.00</h3>
-        <a href="{{ url_for('b', my_var='Veggie Pizza') }}" class= "btn btn-default" type="submit" value="Order">Order</a>
+        <a href="{{ url_for('cart', food='Veggie Pizza') }}" class= "btn btn-default" type="submit" value="Order">Order</a>
     </div>
     <div class="item">
         <image src="{{url_for('static', filename='images/burger1.jpg')}}" height="300" width="350">
         <h4>Burger</h4>
             <h3>10.50</h3>
-        <a href="/cart" class= "btn btn-default" type="submit" value="Order">Order</a>
+        <a href="{{ url_for('cart', food='Burger') }}" class= "btn btn-default" type="submit" value="Order">Order</a>
     </div>
     <div class="item">
         <image src="{{url_for('static', filename='images/burger2.jpg')}}" height="300" width="350">
         <h4>Chicken Burger</h4>
             <h3>8.50</h3>
-        <a href="/cart" class= "btn btn-default" type="submit" value="Order">Order</a>
+        <a href="{{ url_for('cart', food='Chicken Burger') }}" class= "btn btn-default" type="submit" value="Order">Order</a>
     </div>
     <div class="item">
         <image src="{{url_for('static', filename='images/pasta1.jpg')}}" height="300" width="350">
         <h4>Spaghetti</h4>
             <h3>9.50</h3>
-        <a href="/cart" class= "btn btn-default" type="submit" value="Order">Order</a>
+        <a href="{{ url_for('cart', food='Spaghetti') }}" class= "btn btn-default" type="submit" value="Order">Order</a>
     </div>
     <div class="item">
-        <image src="{{url_for('static', filename='images/pasta2.jpg')}}" height="300" width="350">
+        <image src="{{ url_for('cart', food='Chicken Alfredo') }}" height="300" width="350">
         <h4>Chicken Alfredo</h4>
             <h3>14.00</h3>
             <a href="/cart" class= "btn btn-default" type="submit" value="Order">Order</a>
