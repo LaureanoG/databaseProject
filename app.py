@@ -97,28 +97,24 @@ def cart():
     # Prints what is currently in the cart
     connector = sqlite3.connect('database.db')
     cursor = connector.cursor()
-    msg = 'NO'
     try:  # See if it exists
         session['price']
         session['orderID']
     except: # Initialize if non existent/start a new instance of cart
-        msg = 'again'
         seed(time.time())
         session['orderID'] = randint(0, 10000)
     foodSet = {'Pizza', 'Veggie Pizza', 'Burger', 'Chicken Burger', 'Spaghetti', 'Chicken Alfredo'}
     if request.method == "GET" and request.args.get('food', None) not in foodSet:
-        return render_template("cart.html", msg=msg)
+        return render_template("cart.html")
     elif request.method == 'GET':
         food = request.args.get('food', None)
-        #msg = food + " "+ str(session['orderID'])
         foodIDNum = cursor.execute('SELECT FoodID FROM FoodItem WHERE Name = (?);', (food,)).fetchone()[0]
-        #msg += " " + str(foodIDNum)
         cursor.execute('INSERT INTO Cart VALUES(?, ?, ?);', (session['orderID'], foodIDNum, 1))
         connector.commit()
         cursor.execute('UPDATE OrderHistory SET Total = (SELECT UnitPrice FROM FoodItem WHERE FoodID = (?)) WHERE OrderID = (?) and FoodID = (?);', (foodIDNum, session['orderID'], foodIDNum))
         connector.commit()
     connector.close()
-    return render_template("cart.html", msg = msg)
+    return render_template("cart.html")
 
 
 @app.route("/menuCustomer", methods=['GET', 'POST'])
@@ -183,16 +179,7 @@ def addCustomerForm():
 def orderHistory():
     connector = sqlite3.connect('database.db')
     cursor = connector.cursor()
-    # When place order is clicked, CART TABLE  is emptied & order is added to table
-    #     foodNames = {'Pizza': 1, 'Veggie Pizza': 2, 'Burger': 3}
-    #     for x in foodNames:
-    #         cursor.execute('INSERT INTO OrderHistory VALUES(?, ?, ?, ?, ?, ?)', \
-    #                        (session['CustomerID'], randint(0, 100000), foodNames[x], session[x], date.today(), session['price']))
-    #         connector.commit()
-    #cursor.execute('SELECT * FROM OrderHistory INNER JOIN Cart ON Cart.OrderID=OrderHistory.OrderID;')
-    #connector.commit()
-
-    if request.method == "GET":
+    if request.method == "GET" and request.args.get('val', None) == "Place Order":
         foodID = cursor.execute('SELECT FoodID FROM Cart WHERE OrderID = (?);', (session['orderID'], )).fetchone()[0]
         price = cursor.execute('SELECT UnitPrice FROM FoodItem WHERE FoodID = (?);', (foodID, )).fetchone()[0]
         cursor.execute('INSERT OR REPLACE INTO OrderHistory VALUES(?, ?, ?, ?, ?, ?);', \
