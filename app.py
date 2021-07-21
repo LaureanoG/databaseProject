@@ -24,6 +24,11 @@ def initialize():
         time.sleep(2)
         cursor.execute(i)
     connector.commit()
+    file = open('initializeFoodItem.txt.txt', 'r')
+    for i in file.readlines():
+        time.sleep(1)
+        cursor.execute(i)
+    connector.commit()
     return render_template("login.html", msg='Welcome to LLN Resto!')
 
 
@@ -75,23 +80,26 @@ def homeCustomer():
 @app.route("/cart", methods=['GET', 'POST'])
 def cart():
     # Prints what is currently in the cart
-    try:
+    connector = sqlite3.connect('database.db')
+    cursor = connector.cursor()
+    msg = 'NO'
+    try:  # See if it exists
         session['price']
-    except:
+        session['orderID']
+    except: # Initialize if non existant/start a new instance of cart
         session['price'] = 0
-    if request.method == 'POST' and request.path != "/cart":
+        session['orderID'] = randint(0, 10000)
+        cursor.execute('TRUNCATE TABLE Cart;')
+
+    if request.method == 'GET':
         food = request.args.get('food', None)
-        # Based on food will perform queries
-        # If food exists, quanity of food item will increment
-        if session[food]:
-            session[food] += 1
-        else:  # If food doesn't exist, add it to the table
-            session[food] = 1
-        connector = sqlite3.connect('database.db')
-        cursor = connector.cursor()
-        session['price'] += cursor.execute('Select UnitPrice FROM FoodItem WHERE Name = (?)', (food,))
+        msg = food
+        #Based on food will perform queries
+        #If food exists, quaTnity of food item will increment - USE CART TABLE
+        # else:  # If food doesn't exist, add it to the table
+        #session['price'] += cursor.execute('Select UnitPrice FROM FoodItem WHERE Name = (?)', (food,))
         # Maybe a dictionary would work well for storing values & food
-    return render_template("cart.html")
+    return render_template("cart.html", msg = msg)
 
 
 @app.route("/menuCustomer", methods=['GET', 'POST'])
@@ -156,13 +164,13 @@ def addCustomerForm():
 def orderHistory():
     connector = sqlite3.connect('database.db')
     cursor = connector.cursor()
-    # When place order is clicked, session variable is emptied & order is added to table
-    if request.method == "POST":
-        foodNames = {'Pizza': 1, 'Veggie Pizza': 2, 'Burger': 3}
-        for x in foodNames:
-            cursor.execute('INSERT INTO OrderHistory VALUES(?, ?, ?, ?, ?, ?)', \
-                           (session['CustomerID'], randint(0, 100000), foodNames[x], session[x], date.today(), session['price']))
-            connector.commit()
+    # When place order is clicked, CART TABLE  is emptied & order is added to table
+    # if request.method == "POST":
+    #     foodNames = {'Pizza': 1, 'Veggie Pizza': 2, 'Burger': 3}
+    #     for x in foodNames:
+    #         cursor.execute('INSERT INTO OrderHistory VALUES(?, ?, ?, ?, ?, ?)', \
+    #                        (session['CustomerID'], randint(0, 100000), foodNames[x], session[x], date.today(), session['price']))
+    #         connector.commit()
     cursor.execute('SELECT * FROM OrderHistory INNER JOIN Cart ON Cart.OrderID=OrderHistory.OrderID;')
     connector.commit()
     cursor.execute('SELECT * FROM OrderHistory;')

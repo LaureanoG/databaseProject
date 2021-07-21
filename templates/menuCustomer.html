@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <!--Bootstrap CSS-->
@@ -23,13 +25,13 @@
         <image src="{{url_for('static', filename='images/pizza1.jpg')}}" height="300" width="350">
         <h4>Pizza</h4>
             <h3>15.00</h3>
-        <a href="/cart" class= "btn btn-default" type="submit" value="Order">Order</a>
+        <a href="{{ url_for('b', my_var='Pizza') }}" class= "btn btn-default" type="submit" value="Order">Order</a>
     </div>
     <div class="item">
         <image src="{{url_for('static', filename='images/pizza2.jpg')}}" height="300" width="350">
         <h4>Veggie Pizza</h4>
             <h3>12.00</h3>
-        <a href="/cart" class= "btn btn-default" type="submit" value="Order">Order</a>
+        <a href="{{ url_for('b', my_var='Veggie Pizza') }}" class= "btn btn-default" type="submit" value="Order">Order</a>
     </div>
     <div class="item">
         <image src="{{url_for('static', filename='images/burger1.jpg')}}" height="300" width="350">
