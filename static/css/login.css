@@ -40,7 +40,7 @@ nav ul a:hover{
 }
 .background img{
     width: 100%;
-    height: 700px;
+    height: 1000px;
     object-fit: pointer;
     cursor: pointer;
     transition: 0.2s ease;

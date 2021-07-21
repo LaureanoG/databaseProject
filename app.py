@@ -93,17 +93,19 @@ def cart():
         seed(time.time())
         session['orderID'] = randint(0, 10000)
     foodSet = {'Pizza', 'Veggie Pizza', 'Burger', 'Chicken Burger', 'Spaghetti', 'Chicken Alfredo'}
-    if request.method == "GET" and request.args.get('food', None) not in foodSet:
-        return render_template("cart.html")
-    elif request.method == 'GET':
+    if request.method == "GET" and request.args.get('food', None) not in foodSet: # Case: There's nothing in the cart
+        return render_template("cart.html", subtotal = 0.00, tax = 0.00, total = 0.00)
+    elif request.method == 'GET': # There is something in the cart
         food = request.args.get('food', None)
         foodIDNum = cursor.execute('SELECT FoodID FROM FoodItem WHERE Name = (?);', (food,)).fetchone()[0]
         cursor.execute('INSERT INTO Cart VALUES(?, ?, ?);', (session['orderID'], foodIDNum, 1))
         connector.commit()
+        price = cursor.execute('SELECT UnitPrice FROM FoodItem WHERE FoodID = (?);', (foodIDNum, )).fetchone()[0]
         cursor.execute('UPDATE OrderHistory SET Total = (SELECT UnitPrice FROM FoodItem WHERE FoodID = (?)) WHERE OrderID = (?) and FoodID = (?);', (foodIDNum, session['orderID'], foodIDNum))
         connector.commit()
+        return render_template("cart.html", foodItem = food, quantity = 1, subtotal = price, tax = round(float(price) * 0.07, 2), total = round(float(price) + float(price) * 0.07, 2))
     connector.close()
-    return render_template("cart.html")
+    return render_template("cart.html", subtotal = 0.00, tax = 0.00, total = 0.00)
 
 
 @app.route("/menuCustomer", methods=['GET', 'POST'])
@@ -172,7 +174,7 @@ def orderHistory():
         foodID = cursor.execute('SELECT FoodID FROM Cart WHERE OrderID = (?);', (session['orderID'], )).fetchone()[0]
         price = cursor.execute('SELECT UnitPrice FROM FoodItem WHERE FoodID = (?);', (foodID, )).fetchone()[0]
         cursor.execute('INSERT OR REPLACE INTO OrderHistory VALUES(?, ?, ?, ?, ?, ?);', \
-                       (int(session['customerID']), int(session['orderID']), foodID, 1, datetime.today(), price))
+                       (int(session['customerID']), int(session['orderID']), foodID, 1, datetime.today(), price * 0.07 + price))
         connector.commit()
         session['orderID'] = randint(0, 100000)
     fName = cursor.execute('SELECT Fname FROM Customer WHERE CustomerID = (?);', (int(session['customerID']),)).fetchone()[0]
