@@ -24,6 +24,11 @@ def initialize():
         time.sleep(1)
         cursor.execute(i)
         connector.commit()
+    file = open('initializeFoodItem.txt', 'r')
+    for i in file.readlines():
+        time.sleep(1)
+        cursor.execute(i)
+    connector.commit()
     connector.close()
     return render_template("login.html", msg='Welcome to LLN Resto!')
 
@@ -68,27 +73,11 @@ def login():
 
 @app.route('/homeAdmin', methods=['GET', 'POST'])
 def homeAdmin():
-    connector = sqlite3.connect('database.db')
-    cursor = connector.cursor()
-    file = open('initializeFoodItem.txt', 'r')
-    for i in file.readlines():
-        time.sleep(1)
-        cursor.execute(i)
-    connector.commit()
-    connector.close()
     return render_template('homeAdmin.html')
 
 
 @app.route('/homeCustomer', methods=['GET', 'POST'])
 def homeCustomer():
-    connector = sqlite3.connect('database.db')
-    cursor = connector.cursor()
-    file = open('initializeFoodItem.txt', 'r')
-    for i in file.readlines():
-        time.sleep(1)
-        cursor.execute(i)
-    connector.commit()
-    connector.close()
     return render_template('homeCustomer.html')
 
 
@@ -188,5 +177,5 @@ def orderHistory():
         session['orderID'] = randint(0, 100000)
     fName = cursor.execute('SELECT Fname FROM Customer WHERE CustomerID = (?);', (int(session['customerID']),)).fetchone()[0]
     lName = cursor.execute('SELECT Lname FROM Customer WHERE CustomerID = (?);', (int(session['customerID']),)).fetchone()[0]
-    cursor.execute('SELECT OrderID, FoodID, Quantity, Ordered, Total FROM OrderHistory ORDER BY Ordered;')
+    cursor.execute('SELECT OrderID, Name, Quantity, Ordered, Total FROM OrderHistory NATURAL JOIN FoodItem ORDER BY Ordered DESC;')
     return render_template("orderHistory.html", data=cursor, lname = lName, fname = fName)
